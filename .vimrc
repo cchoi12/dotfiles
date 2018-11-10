@@ -24,6 +24,7 @@ set guifont=Inconsolata:h14.00 "best font ever
 "ignored directories which command-t will use too. Make sure _build is in here
 set wildignore=*.o,*.obj,.git,node_modules/**,bower_components/**,**/node_modules/**,_build/**,deps/**
 
+"color scheme
 colorscheme space-vim-dark
 hi Comment guifg=#5C6370 ctermfg=59
 set background=dark
@@ -31,6 +32,7 @@ set t_Co=256
 
 set guifont=Fira\ Code:h12
 
+"change cursor shape when in insert or visual mode
 if exists('$TMUX')
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
   let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
@@ -38,9 +40,6 @@ else
   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
-
-" indentation lines
-let g:indentLine_char = '▏'
 
 " stop using arrow keys, dammit
 noremap <Up> <nop>
@@ -162,7 +161,6 @@ Plug 'mhinz/vim-mix-format'
 Plug 'slashmili/alchemist.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'yuttie/comfortable-motion.vim'
-Plug 'Yggdroot/indentLine' 
 
 call plug#end()
 
