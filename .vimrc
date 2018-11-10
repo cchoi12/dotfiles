@@ -40,9 +40,7 @@ else
 endif
 
 " indentation lines
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
+let g:indentLine_char = '▏'
 
 " stop using arrow keys, dammit
 noremap <Up> <nop>
@@ -89,7 +87,6 @@ let g:netrw_banner = 0
 
 " show . files
 let NERDTreeShowHidden=1
-
 
 " enter messages
 set cmdheight=2
@@ -156,15 +153,16 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'mileszs/ack.vim'
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-dispatch'
 Plug 'RRethy/vim-illuminate'
 Plug 'scrooloose/nerdtree'
-Plug 'slashmili/alchemist.vim'
 Plug 'wakatime/vim-wakatime'
 Plug 'mhinz/vim-mix-format'
+Plug 'slashmili/alchemist.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'yuttie/comfortable-motion.vim'
+Plug 'Yggdroot/indentLine' 
 
 call plug#end()
 
