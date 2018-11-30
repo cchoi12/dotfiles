@@ -32,6 +32,9 @@ set t_Co=256
 
 set guifont=Fira\ Code:h12
 
+" bind c-x c-o to control space
+imap <c-space> <c-x><c-o>
+
 "change cursor shape when in insert or visual mode
 if exists('$TMUX')
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
@@ -110,8 +113,8 @@ function! TrimWhiteSpace()
 endfunction
 autocmd BufWritePre *.{rb,ex,exs} :call TrimWhiteSpace()
 
-" set spell check for only markdown files
-autocmd BufRead,BufNewFile *.md setlocal spell
+" set spell check for only markdown files, disable for now.
+" autocmd BufRead,BufNewFile *.md setlocal spell
 
 " Linter color
 highlight ALEWarning cterm=underline ctermfg=DarkMagenta
@@ -126,19 +129,26 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-e> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-
 " Remap control+n to tab when word
 " allows tab indention on empty/newlines.
 " allows tab to cycle through word suggestions
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+"function! InsertTabWrapper()
+"    let col = col('.') - 1
+"    if !col || getline('.')[col - 1] !~ '\k'
+"        return "\<tab>"
+"    else
+"        return "\<c-p>"
+"    endif
+"endfunction
+"inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+let g:SuperTabDefaultCompletionType = "context"
+
+"OmniCompletion on all the time
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+
+let g:user_emmet_leader_key=','
 
 call plug#begin('~/.vim/plugged')
 
@@ -161,6 +171,9 @@ Plug 'mhinz/vim-mix-format'
 Plug 'slashmili/alchemist.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'yuttie/comfortable-motion.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'ervandew/supertab'
+Plug 'mattn/emmet-vim'
 
 call plug#end()
 
