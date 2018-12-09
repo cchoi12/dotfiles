@@ -4,31 +4,29 @@ syntax on
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
-let g:airline_symbols = {}
+    let g:airline_symbols = {}
 endif
 " unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
+" " old vim-powerline symbols
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
+let g:airline#extensions#tabline#left_sep = '⮀'
+let g:airline#extensions#tabline#left_alt_sep = '⮁'
+let g:airline#extensions#tabline#right_sep = '⮂'
+let g:airline#extensions#tabline#right_alt_sep = '⮃'
 
 set guifont=Inconsolata:h14.00 "best font ever
 "ignored directories which command-t will use too. Make sure _build is in here
 set wildignore=*.o,*.obj,.git,node_modules/**,bower_components/**,**/node_modules/**,_build/**,deps/**
 
 "color scheme
-colorscheme space-vim-dark
-hi Comment guifg=#5C6370 ctermfg=59
-set background=dark
-set t_Co=256
+" hi Comment guifg=#5C6370 ctermfg=59
+" set t_Co=256
 
 set guifont=Fira\ Code:h12
 
@@ -93,6 +91,21 @@ let NERDTreeShowHidden=1
 " enter messages
 set cmdheight=2
 
+" formatter set to config
+let g:editorconfig_Beautifier = '~/.editorconfig'
+".vimrc
+map <Leader>f :call JsBeautify()<cr>
+" or
+autocmd FileType javascript noremap <buffer> <Leader>f :call JsBeautify()<cr>
+" for json
+autocmd FileType json noremap <buffer> <Leader>f :call JsonBeautify()<cr>
+" for jsx
+autocmd FileType jsx noremap <buffer> <Leader>f :call JsxBeautify()<cr>
+" for html
+autocmd FileType html noremap <buffer> <Leader>f :call HtmlBeautify()<cr>
+" for css or scss
+autocmd FileType css noremap <buffer> <Leader>f :call CSSBeautify()<cr>
+
 " ag searching
 let g:ackprg = 'ag --vimgrep --smart-case'
 cnoreabbrev ag Ack
@@ -129,17 +142,6 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-e> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Remap control+n to tab when word
-" allows tab indention on empty/newlines.
-" allows tab to cycle through word suggestions
-"function! InsertTabWrapper()
-"    let col = col('.') - 1
-"    if !col || getline('.')[col - 1] !~ '\k'
-"        return "\<tab>"
-"    else
-"        return "\<c-p>"
-"    endif
-"endfunction
 "inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 let g:SuperTabDefaultCompletionType = "context"
@@ -160,22 +162,31 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'liuchengxu/space-vim-dark'
+Plug 'cocopon/iceberg.vim'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-rails'
-Plug 'tpope/vim-dispatch'
-Plug 'RRethy/vim-illuminate'
 Plug 'scrooloose/nerdtree'
 Plug 'wakatime/vim-wakatime'
-Plug 'mhinz/vim-mix-format'
-Plug 'slashmili/alchemist.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'yuttie/comfortable-motion.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'ervandew/supertab'
 Plug 'mattn/emmet-vim'
+Plug 'JulesWang/css.vim'
+Plug 'Valloric/MatchTagAlways'
+Plug 'scrooloose/nerdcommenter'
+Plug 'maksimr/vim-jsbeautify'
 
 call plug#end()
+
+set background=dark
+set t_Co=256
+colorscheme iceberg 
+
+"match it highlight color
+let g:mta_use_matchparen_group = 0
+let  g:mta_set_default_matchtag_color = 0
+highlight MatchTag ctermfg=black ctermbg=lightgreen guifg=black guibg=lightgreen
+nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
 let mapleader = ","
 map <leader>so :source $MYVIMRC<CR>
