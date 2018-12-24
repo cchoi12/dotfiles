@@ -6,6 +6,7 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
+
 " unicode symbols
 " " old vim-powerline symbols
 let g:airline_left_sep = '⮀'
@@ -41,6 +42,14 @@ else
   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
+
+" Trailing Whitespace
+set listchars=tab:>\ ,trail:•,extends:>,precedes:<,nbsp:+
+set list
+nmap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
+" Cursor
+set cursorline
 
 " stop using arrow keys, dammit
 noremap <Up> <nop>
@@ -175,6 +184,8 @@ Plug 'JulesWang/css.vim'
 Plug 'Valloric/MatchTagAlways'
 Plug 'scrooloose/nerdcommenter'
 Plug 'maksimr/vim-jsbeautify'
+Plug 'brooth/far.vim'
+Plug 'ap/vim-css-color'
 
 call plug#end()
 
