@@ -51,6 +51,13 @@ nmap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 " Cursor
 set cursorline
 
+" Add binding.pry
+nnoremap <silent> gb :let a='binding.pry'\|put=a<cr>
+
+" Maximize/Minimize pane
+nnoremap <C-W>M <C-W>\| <C-W>_
+nnoremap <C-W>m <C-W>=
+
 " stop using arrow keys, dammit
 noremap <Up> <nop>
 noremap <Down> <nop>
@@ -61,6 +68,10 @@ inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
+
+" live reload files if it changes on disk
+set autoread
+autocmd CursorHold * checktime
 
 " word wrap more excellently
 nnoremap <expr> j v:count ? 'j' : 'gj'
@@ -148,7 +159,7 @@ hi illuminatedWord cterm=reverse gui=underline ctermbg=Black ctermfg=LightGreen
 " NERDtree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-map <C-e> :NERDTreeToggle<CR>
+map <silent> <C-e> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "inoremap <tab> <c-r>=InsertTabWrapper()<cr>
@@ -158,6 +169,14 @@ let g:SuperTabDefaultCompletionType = "context"
 "OmniCompletion on all the time
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
+
+" vim-rspec
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+let g:rspec_runner = "os_x_iterm2"
+
 
 let g:user_emmet_leader_key=','
 
@@ -174,6 +193,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'cocopon/iceberg.vim'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-rails'
+Plug 'thoughtbot/vim-rspec'
 Plug 'scrooloose/nerdtree'
 Plug 'wakatime/vim-wakatime'
 Plug 'christoomey/vim-tmux-navigator'
@@ -186,6 +206,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'brooth/far.vim'
 Plug 'ap/vim-css-color'
+Plug 'majutsushi/tagbar'
 
 call plug#end()
 
@@ -195,13 +216,15 @@ colorscheme iceberg
 
 "match it highlight color
 let g:mta_use_matchparen_group = 0
-let  g:mta_set_default_matchtag_color = 0
+let g:mta_set_default_matchtag_color = 0
 highlight MatchTag ctermfg=black ctermbg=lightgreen guifg=black guibg=lightgreen
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
 let mapleader = ","
 map <leader>so :source $MYVIMRC<CR>
 map <leader>r :!resize<CR><CR>
+map <leader>c :!ctags -R --languages=ruby --exclude=.git --exclude=log --tag-relative=yes -f tags . $(bundle list --paths)<CR>
+nnoremap <silent> <Leader>b :TagbarToggle<CR>
 
 "run tests right from vim - super helpful
 nnoremap <Leader>mt :Mix test --trace %<CR>
