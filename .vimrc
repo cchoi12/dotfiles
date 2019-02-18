@@ -21,13 +21,8 @@ let g:airline#extensions#tabline#left_alt_sep = '⮁'
 let g:airline#extensions#tabline#right_sep = '⮂'
 let g:airline#extensions#tabline#right_alt_sep = '⮃'
 
-set guifont=Inconsolata:h14.00 "best font ever
 "ignored directories which command-t will use too. Make sure _build is in here
 set wildignore=*.o,*.obj,.git,node_modules/**,bower_components/**,**/node_modules/**,_build/**,deps/**
-
-"color scheme
-" hi Comment guifg=#5C6370 ctermfg=59
-" set t_Co=256
 
 set guifont=Fira\ Code:h12
 
