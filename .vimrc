@@ -202,6 +202,7 @@ Plug 'maksimr/vim-jsbeautify'
 Plug 'brooth/far.vim'
 Plug 'ap/vim-css-color'
 Plug 'majutsushi/tagbar'
+Plug 'cohama/lexima.vim'
 
 call plug#end()
 
@@ -219,6 +220,8 @@ let mapleader = ","
 map <leader>so :source $MYVIMRC<CR>
 map <leader>r :!resize<CR><CR>
 map <leader>c :!ctags -R --languages=ruby --exclude=.git --exclude=log --tag-relative=yes -f tags . $(bundle list --paths)<CR>
+map <Leader>vi :tabe ~/.vimrc<CR>
+
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
 
 "run tests right from vim - super helpful
@@ -226,6 +229,9 @@ nnoremap <Leader>mt :Mix test --trace %<CR>
 
 "on save format elixir code
 let g:mix_format_on_save = 1
+
+" Ale off by default
+let g:ale_enabled = 0
 
 " Load all plugins now.
 " Plugins need to be added to runtimepath before helptags can be generated.
