@@ -8,7 +8,7 @@ if !exists('g:airline_symbols')
 endif
 
 " unicode symbols
-" " old vim-powerline symbols
+" old vim-powerline symbols
 let g:airline_left_sep = '⮀'
 let g:airline_left_alt_sep = '⮁'
 let g:airline_right_sep = '⮂'
@@ -23,7 +23,6 @@ let g:airline#extensions#tabline#right_alt_sep = '⮃'
 
 "ignored directories which command-t will use too. Make sure _build is in here
 set wildignore=*.o,*.obj,.git,node_modules/**,bower_components/**,**/node_modules/**,_build/**,deps/**
-
 set guifont=Fira\ Code:h12
 
 " bind c-x c-o to control space
@@ -141,9 +140,6 @@ function! TrimWhiteSpace()
 endfunction
 autocmd BufWritePre *.{rb,ex,exs} :call TrimWhiteSpace()
 
-" set spell check for only markdown files, disable for now.
-" autocmd BufRead,BufNewFile *.md setlocal spell
-
 " Linter color
 highlight ALEWarning cterm=underline ctermfg=DarkMagenta
 
@@ -171,7 +167,6 @@ map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 let g:rspec_runner = "os_x_iterm2"
-
 
 let g:user_emmet_leader_key=','
 
@@ -208,7 +203,7 @@ call plug#end()
 
 set background=dark
 set t_Co=256
-colorscheme iceberg 
+colorscheme iceberg
 
 "match it highlight color
 let g:mta_use_matchparen_group = 0
