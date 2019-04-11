@@ -127,8 +127,13 @@ cnoreabbrev aG Ack
 cnoreabbrev Ag Ack
 cnoreabbrev AG Ack
 
-" fzf file fuzzy search
-nnoremap <C-p> :FZF<CR>
+" fzf file fuzzy search that respects .gitignore
+" Use :GFiles with these flags which essentially take any file that, is
+" tracked, staged, or appears as untracked in `git status`, resulting in
+" annoying directories like "deps" or "_build" being included in <C-p> results
+" It will also include results that wouldn't otherwise have been included such
+" as .circleci/config.yml
+nnoremap <C-p> :GFiles --exclude-standard --others --cached<CR>
 
 " highlight the status bar when in insert mode
 au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
@@ -172,6 +177,7 @@ let g:user_emmet_leader_key=','
 
 call plug#begin('~/.vim/plugged')
 
+" Fuzzy Search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter'
@@ -180,6 +186,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" Theme
 Plug 'cocopon/iceberg.vim'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-rails'
