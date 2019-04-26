@@ -139,7 +139,7 @@ nnoremap <C-p> :GFiles --exclude-standard --others --cached<CR>
 au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
 au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
 
-" Remove trailing whitespaces on save for only .rb files
+" Remove trailing whitespaces on save for only rb, ex, exs files
 function! TrimWhiteSpace()
     %s/\s\+$//e
 endfunction
@@ -173,6 +173,7 @@ map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 let g:rspec_runner = "os_x_iterm2"
 
+" emmet
 let g:user_emmet_leader_key=','
 
 call plug#begin('~/.vim/plugged')
@@ -180,29 +181,34 @@ call plug#begin('~/.vim/plugged')
 " Fuzzy Search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
-Plug 'airblade/vim-gitgutter'
+Plug 'mileszs/ack.vim'
+
+" Language
 Plug 'tmhedberg/matchit'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'pangloss/vim-javascript'
+Plug 'thoughtbot/vim-rspec'
+Plug 'JulesWang/css.vim'
+Plug 'mattn/emmet-vim'
+
+" Visual
+Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Theme
 Plug 'cocopon/iceberg.vim'
-Plug 'mileszs/ack.vim'
-Plug 'tpope/vim-rails'
-Plug 'thoughtbot/vim-rspec'
 Plug 'scrooloose/nerdtree'
 Plug 'wakatime/vim-wakatime'
+Plug 'ap/vim-css-color'
+
+" Movement
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'pangloss/vim-javascript'
 Plug 'ervandew/supertab'
-Plug 'mattn/emmet-vim'
-Plug 'JulesWang/css.vim'
 Plug 'Valloric/MatchTagAlways'
 Plug 'scrooloose/nerdcommenter'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'brooth/far.vim'
-Plug 'ap/vim-css-color'
 Plug 'majutsushi/tagbar'
 Plug 'cohama/lexima.vim'
 
