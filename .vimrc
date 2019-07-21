@@ -28,6 +28,19 @@ set guifont=Fira\ Code:h12
 " bind c-x c-o to control space
 imap <c-space> <c-x><c-o>
 
+" quickly open buffers
+nnoremap <leader>bb :buffers<cr>:b<space>
+" quick toggle most recent buffers
+nnoremap <leader><tab> :b#<cr>
+
+" Syntax toggle
+nnoremap <silent> <Leader>qq
+             \ : if exists("syntax_on") <BAR>
+             \    syntax off <BAR>
+             \ else <BAR>
+             \    syntax enable <BAR>
+             \ endif<CR>
+
 "change cursor shape when in insert or visual mode
 if exists('$TMUX')
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
@@ -65,7 +78,18 @@ inoremap <Right> <nop>
 
 " live reload files if it changes on disk
 set autoread
-autocmd CursorHold * checktime
+augroup vimrc_autocmd
+  autocmd!
+  "toggle quickfix window
+  autocmd BufReadPost quickfix map <buffer> <leader>qq :cclose<cr>|map <buffer> <c-p> <up>|map <buffer> <c-n> <down>
+
+  autocmd FileType unite call s:unite_settings()
+  " obliterate unite buffers (marks especially).
+  autocmd BufLeave \[unite\]* if "nofile" ==# &buftype | setlocal bufhidden=wipe | endif
+
+  " Jump to the last position when reopening a file
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
 
 " word wrap more excellently
 nnoremap <expr> j v:count ? 'j' : 'gj'
@@ -87,7 +111,11 @@ set shiftwidth=2
 set softtabstop=2
 set showmatch
 
+" Add a line at col 80 for wrap
+set colorcolumn=80
+
 " set relative number
+set relativenumber
 set number
 
 " avoid e!
@@ -157,6 +185,7 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <silent> <C-e> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+nmap <Leader>F :NERDTreeFind<CR>
 
 "inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
@@ -174,7 +203,14 @@ map <Leader>a :call RunAllSpecs()<CR>
 let g:rspec_runner = "os_x_iterm2"
 
 " emmet
-let g:user_emmet_leader_key=','
+" let g:user_emmet_leader_key=','
+
+" Flutter
+nnoremap <leader>fr :FlutterRun<cr>
+nnoremap <leader>fq :FlutterQuit<cr>
+nnoremap <leader>fh :FlutterHotReload<cr>
+nnoremap <leader>fR :FlutterHotRestart<cr>
+nnoremap <leader>fD :FlutterVisualDebug<cr>
 
 call plug#begin('~/.vim/plugged')
 
@@ -182,6 +218,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
+Plug 'ervandew/supertab'
 
 " Language
 Plug 'tmhedberg/matchit'
@@ -189,9 +226,9 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'pangloss/vim-javascript'
-Plug 'thoughtbot/vim-rspec'
-Plug 'JulesWang/css.vim'
 Plug 'mattn/emmet-vim'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
 
 " Visual
 Plug 'airblade/vim-gitgutter'
@@ -204,12 +241,8 @@ Plug 'ap/vim-css-color'
 
 " Movement
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'ervandew/supertab'
 Plug 'Valloric/MatchTagAlways'
-Plug 'scrooloose/nerdcommenter'
 Plug 'maksimr/vim-jsbeautify'
-Plug 'brooth/far.vim'
-Plug 'majutsushi/tagbar'
 Plug 'cohama/lexima.vim'
 
 call plug#end()
@@ -229,8 +262,6 @@ map <leader>so :source $MYVIMRC<CR>
 map <leader>r :!resize<CR><CR>
 map <leader>c :!ctags -R --languages=ruby --exclude=.git --exclude=log --tag-relative=yes -f tags . $(bundle list --paths)<CR>
 map <Leader>vi :tabe ~/.vimrc<CR>
-
-nnoremap <silent> <Leader>b :TagbarToggle<CR>
 
 "run tests right from vim - super helpful
 nnoremap <Leader>mt :Mix test --trace %<CR>
